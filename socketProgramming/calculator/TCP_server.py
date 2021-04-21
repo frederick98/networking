@@ -36,17 +36,18 @@ while True:
     while True:
         try:
             expression = connection.recv(1024)
+            expression = expression.decode()
             if(expression != 'end'):
                 print("Received from client " + str(address) + ": " + str(expression))
-                
                 # calculate expression
                 result = eval(expression)
+                print("passed", result)
                 
                 # send expression
+                print("Sent to client " + str(address) + ": " + str(result))
                 connection.send(str(result).encode())
-                print("Sent to client " + str(address) + ": " + str(returnMessage))
             else:
-                connection.send(str("Server is closing...").encode())
+                connection.send(str("Connection is closing...").encode())
                 break
         except(ZeroDivisionError):
             connection.send("Please check expression, you can't divide by 0!".encode())
