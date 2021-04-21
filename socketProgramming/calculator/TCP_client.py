@@ -14,13 +14,14 @@ try:
     # create socket object
     #host = socket.gethostname()
     serverHost = "localhost"
-    serverPort = int(input("Masukkan port yang sama dengan server: "))
+    serverPort = int(input("Write server's port: "))
     clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     
     # connect to server at port: serverPort
     clientSocket.connect((serverHost, serverPort))
     
     message = 'start'
+    print("Welcome, parsing connection to server... done. ")
     while message.lower().strip() != 'end':
         if(message.lower().strip() == ''):
             message ='end'
@@ -34,5 +35,5 @@ try:
     # close socket when 'end' command received
     clientSocket.close()
     
-except(IndexError, ValueError):
+except(ConnectionRefusedError):
     print("Insert correct port number!")
